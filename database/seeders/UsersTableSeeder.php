@@ -22,9 +22,11 @@ class UsersTableSeeder extends Seeder
 
         ]);
 
-        $role= Role::where('name','=','super_admin')->first();
+        //$role= Role::where('name','=','super_admin')->first();
 
-        $user->attachRole('super_admin');
+        //$user->attachRole('super_admin');
+
+        $user->addRole('super_admin');
 
 
 

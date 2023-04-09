@@ -204,7 +204,7 @@
                             </li>
 
                             {{--<!-- Menu Footer-->--}}
-                            {{-- <li class="user-footer">
+                            <li class="user-footer">
 
 
                                 <a href="{{ route('logout') }}" class="btn btn-default btn-flat" onclick="event.preventDefault();
@@ -214,7 +214,7 @@
                                     @csrf
                                 </form>
 
-                            </li> --}}
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -287,20 +287,20 @@
 
             e.preventDefault();
 
-            // var n = new Noty({
-            //     text: "@lang('site.confirm_delete')",
-            //     type: "warning",
-            //     killer: true,
-            //     buttons: [
-            //         Noty.button("@lang('site.yes')", 'btn btn-success mr-2', function () {
-            //             that.closest('form').submit();
-            //         }),
+            var n = new Noty({
+                text: "@lang('site.confirm_delete')",
+                type: "warning",
+                killer: true,
+                buttons: [
+                    Noty.button("@lang('site.yes')", 'btn btn-success mr-2', function () {
+                        that.closest('form').submit();
+                    }),
 
-            //         Noty.button("@lang('site.no')", 'btn btn-primary mr-2', function () {
-            //             n.close();
-            //         })
-            //     ]
-            // });
+                    Noty.button("@lang('site.no')", 'btn btn-primary mr-2', function () {
+                        n.close();
+                    })
+                ]
+            });
 
             n.show();
 
