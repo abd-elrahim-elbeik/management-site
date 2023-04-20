@@ -24,6 +24,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'image',
     ];
 
     /**
@@ -35,6 +36,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected $appends = ['image_path'];
 
     /**
      * The attributes that should be cast.
@@ -53,5 +56,10 @@ class User extends Authenticatable
     public function getLastNameAttribute($value) //to make first character in last name capital
     {
         return ucfirst($value);
+    }
+
+    public function getImagePathAttribute()
+    {
+        return asset('uploads/user_images/' . $this->image);
     }
 }
