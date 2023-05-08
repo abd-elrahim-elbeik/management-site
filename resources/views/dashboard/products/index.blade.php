@@ -9,7 +9,7 @@
             <h1>@lang('site.products')</h1>
 
             <ol class="breadcrumb">
-                <li><a href="{{ route('dashboard.index') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
+                <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
                 <li class="active">@lang('site.products')</li>
             </ol>
         </section>
@@ -77,9 +77,10 @@
                             <tbody>
 
                             @foreach ($products as $index=>$product)
+                            
 
                                 <tr>
-                                    <td>{{ $product->id-1  }}</td>
+                                    <td>{{ $index +1  }}</td>
                                     <td>{{ $product->name }}</td>
                                     <td>{!! $product->description !!}</td>
                                     <td>{{ $product->category->name }}</td>

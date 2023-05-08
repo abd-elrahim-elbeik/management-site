@@ -6,11 +6,11 @@
 
         <section class="content-header">
 
-            <h1>@lang('site.users')</h1>
+            <h1>@lang('site.clients')</h1>
 
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
-                <li class="active">@lang('site.users')</li>
+                <li class="active">@lang('site.clients')</li>
             </ol>
         </section>
 
@@ -20,9 +20,9 @@
 
                 <div class="box-header with-border">
 
-                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.users') <small>{{ $users->total() }}</small></h3>
+                    <h3 class="box-title" style="margin-bottom: 15px">@lang('site.clients') <small>{{ $clients->total() }}</small></h3>
 
-                    <form action="{{ route('dashboard.users.index') }}" method="get"> {{-- for search --}}
+                    <form action="{{ route('dashboard.clients.index') }}" method="get">
 
                         <div class="row">
 
@@ -32,8 +32,8 @@
 
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>
-                                @if (auth()->user()->hasPermission('users_create'))
-                                    <a href="{{ route('dashboard.users.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</a>
+                                @if (auth()->user()->hasPermission('clients_create'))
+                                    <a href="{{ route('dashboard.clients.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</a>
                                 @else
                                     <a href="#" class="btn btn-primary disabled"><i class="fa fa-plus"></i> @lang('site.add')</a>
                                 @endif
@@ -46,39 +46,44 @@
 
                 <div class="box-body">
 
-                    @if ($users->count() > 0)
+                    @if ($clients->count() > 0)
 
                         <table class="table table-hover">
 
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>@lang('site.first_name')</th>
-                                <th>@lang('site.last_name')</th>
-                                <th>@lang('site.email')</th>
-                                <th>@lang('site.image')</th>
+                                <th>@lang('site.name')</th>
+                                <th>@lang('site.phone')</th>
+                                <th>@lang('site.address')</th>
+                                <th>@lang('site.add_order')</th>
                                 <th>@lang('site.action')</th>
                             </tr>
                             </thead>
 
                             <tbody>
-
-                            @foreach ($users as $index=>$user)
-
+                            @foreach ($clients as $index=>$client)
                                 <tr>
-                                    <td>{{ $user->id-1  }}</td>
-                                    <td>{{ $user->first_name }}</td>
-                                    <td>{{ $user->last_name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td><img src="{{ $user->image_path }}" style="width: 100px;" class="img-thumbnail" alt=""></td>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $client->name }}</td>
+                                    <td>{{ implode( '-' , array_filter($client ->phone)) }}</td>
+                                    {{-- <td>{{ is_array($client->phone) ? implode($client->phone, '-') : $client->phone }}</td> --}}
+                                    <td>{{ $client->address }}</td>
                                     <td>
-                                        @if (auth()->user()->hasPermission('users_update'))
-                                            <a href="{{ route('dashboard.users.edit', $user->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> @lang('site.edit')</a>
+                                        @if (auth()->user()->hasPermission('orders_create'))
+                                            <a href="{{ route('dashboard.clients.orders.create', $client->id) }}" class="btn btn-primary btn-sm">@lang('site.add_order')</a>
+                                        @else
+                                            <a href="#" class="btn btn-primary btn-sm disabled">@lang('site.add_order')</a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (auth()->user()->hasPermission('clients_update'))
+                                            <a href="{{ route('dashboard.clients.edit', $client->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> @lang('site.edit')</a>
                                         @else
                                             <a href="#" class="btn btn-info btn-sm disabled"><i class="fa fa-edit"></i> @lang('site.edit')</a>
                                         @endif
-                                        @if (auth()->user()->hasPermission('users_delete'))
-                                            <form action="{{ route('dashboard.users.destroy', $user->id) }}" method="post" style="display: inline-block">
+                                        @if (auth()->user()->hasPermission('clients_delete'))
+                                            <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="post" style="display: inline-block">
                                                 {{ csrf_field() }}
                                                 {{ method_field('delete') }}
                                                 <button type="submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i> @lang('site.delete')</button>
@@ -94,7 +99,7 @@
 
                         </table><!-- end of table -->
 
-                        {{ $users->appends(request()->query())->links() }}
+                        {{ $clients->appends(request()->query())->links() }}
 
                     @else
 

@@ -62,4 +62,6 @@ class User extends Authenticatable
     {
         return asset('uploads/user_images/' . $this->image);
     }
+
+    
 }
