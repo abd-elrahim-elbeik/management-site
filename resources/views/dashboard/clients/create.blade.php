@@ -42,6 +42,11 @@
                        @endfor
 
                         <div class="form-group">
+                            <label>@lang('site.email')</label>
+                            <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+                        </div>
+
+                        <div class="form-group">
                             <label>@lang('site.address')</label>
                             <textarea name="address" class="form-control">{{ old('address') }}</textarea>
                         </div>

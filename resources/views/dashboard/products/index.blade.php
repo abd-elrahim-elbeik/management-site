@@ -46,6 +46,7 @@
                                  @else
                                 <a href="#" class="btn btn-primary disabled"><i class="fa fa-plus"></i> @lang('site.add')</a>
                                 @endif
+                                <a href="{{ route('dashboard.export-product') }}" class="btn btn-primary"><i class="fa fa-file"></i> تصدير اكسل </a>
                             </div>
 
                         </div>
@@ -77,7 +78,7 @@
                             <tbody>
 
                             @foreach ($products as $index=>$product)
-                            
+
 
                                 <tr>
                                     <td>{{ $index +1  }}</td>

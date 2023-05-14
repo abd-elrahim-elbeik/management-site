@@ -9,6 +9,8 @@ use Illuminate\Validation\Rule;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProductExport;
 
 class ProductController extends Controller
 {
@@ -25,7 +27,7 @@ class ProductController extends Controller
         })->when($request->category_id, function ($q) use ($request) {
 
             return $q->where('category_id', $request->category_id);
-        })->latest()->paginate(5);
+        })->paginate(5);
 
         return view('dashboard.products.index', compact('categories', 'products'));
     }
@@ -161,5 +163,11 @@ class ProductController extends Controller
 
         session()->flash('success',__('site.deleted_successfully'));
         return redirect()->route('dashboard.products.index');
+    }
+
+    public function export()
+    {
+
+        return Excel::download(new ProductExport, 'products.xlsx');
     }
 }

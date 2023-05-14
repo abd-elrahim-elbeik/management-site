@@ -32,6 +32,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'lo
 
         Route::get('/orders/{order}/products',[DashboardOrderController::class,'products'])->name('orders.products');
 
+        Route::get('export_products', [ProductController::class, 'export'])->name('export-product');
 
 
 

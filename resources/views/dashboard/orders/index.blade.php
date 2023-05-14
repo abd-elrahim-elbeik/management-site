@@ -38,7 +38,9 @@
 
                                     <div class="col-md-4">
                                         <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> @lang('site.search')</button>
+
                                     </div>
+
 
                                 </div><!-- end of row -->
 
@@ -65,13 +67,13 @@
                                             <td>{{ number_format($order->total_price, 2) }}</td>
                                             <td>
                                                 <button
-                                                    data-status="@lang('site.' . $order->status)"
+                                                    data-status="@lang('site.status' . $order->status)"
                                                     {{-- data-url="{{ route('dashboard.orders.update_status', $order->id) }}" --}}
                                                     data-method="put"
                                                     data-available-status='["@lang('site.processing')", "@lang('site.finished') "]'
                                                     class="order-status-btn btn {{ $order->status == 'processing' ? 'btn-warning' : 'btn-success disabled' }} btn-sm"
                                                 >
-                                                    @lang('site.' . $order->status)
+                                                    @lang('site.status' . $order->status)
                                                 </button>
                                             </td>
                                             <td>{{ $order->created_at->toFormattedDateString() }}</td>
@@ -152,6 +154,8 @@
             </div><!-- end of row -->
 
         </section><!-- end of content section -->
+        <!-- Modal -->
+
 
     </div><!-- end of content wrapper -->
 

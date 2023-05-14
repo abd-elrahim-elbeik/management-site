@@ -31,6 +31,9 @@
     @endif
 
     <style>
+        #aaa{
+            margin-right: 10px;
+        }
         .mr-2{
             margin-right: 5px;
         }
@@ -63,6 +66,7 @@
                 transform: rotate(360deg);
             }
         }
+
 
     </style>
     {{--<!-- jQuery 3 -->--}}
@@ -142,28 +146,32 @@
                     </li>
 
                     {{--<!-- Notifications: style can be found in dropdown.less -->--}}
+                    @if (auth()->user()->hasRole('super_admin'))
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
+                            <span class="label label-warning">{{ auth()->user()->unreadNotifications->count() }}</span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
-                            <li>
-                                {{--<!-- inner menu: contains the actual data -->--}}
-                                <ul class="menu">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                            <ul class="dropdown-menu">
+                                <li class="header">You have {{ auth()->user()->unreadNotifications->count() }} notifications</li>
+                                <li>
+                                    {{--<!-- inner menu: contains the actual data -->--}}
+                                    <ul class="menu">
+                                        @foreach (auth()->user()->notifications()->take(10)->get() as $notification)
+                                        <a href="{{ url('ar/dashboard/orders') }}?notification_id={{ $notification->id }}" class="dropdown-item text-wrap @if ($notification->unread()) text-bold @endif">
+                                            <i class="fa fa-dashboard"></i> {{ $notification->data['body'] }}
+                                            <span id="aaa" class="float-end text-muted text-sm">{{ $notification->created_at->longAbsoluteDiffForHumans() }}</span>
                                         </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">View all</a>
-                            </li>
-                        </ul>
+                                        <div class="dropdown-divider"></div>
+                                    @endforeach
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">View all</a>
+                                </li>
+                            </ul>
                     </li>
+                    @endif
 
                     {{--<!-- Tasks: style can be found in dropdown.less -->--}}
                     <li class="dropdown tasks-menu">
@@ -268,6 +276,12 @@
 {{--custom js--}}
 <script src="{{ asset('dashboard_files/js/custom/image_preview.js') }}"></script>
 <script src="{{ asset('dashboard_files/js/custom/order.js') }}"></script>
+<script>
+    const userID = '{{ Auth::user()->id }}';
+</script>
+<script src="{{asset ('build/assets/app-35d33f24.js') }}"></script>
+
+
 
 <script>
     $(document).ready(function () {
@@ -326,6 +340,7 @@
     });//end of ready
 
 </script>
+
 @stack('scripts')
 </body>
 </html>

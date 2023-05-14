@@ -19,7 +19,7 @@ class ClientController extends Controller
                 ->orWhere('phone', 'like', '%' . $request->search . '%')
                 ->orWhere('address', 'like', '%' . $request->search . '%');
 
-        })->latest()->paginate(5);
+        })->paginate(5);
 
 
         return view('dashboard.clients.index', compact('clients'));
@@ -41,12 +41,15 @@ class ClientController extends Controller
         $request->validate([
             'name' => 'required',
             'phone' => 'required|array|min:1',
+            'email' => 'required|unique:clients',
             'phone.0' => 'required',
             'address' => 'required',
 
         ]);
 
         Client::create($request->all());
+
+
 
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.clients.index');

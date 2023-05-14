@@ -19,7 +19,7 @@ class CategoryController extends Controller
 
             return $q->whereTranslationLike('name', '%' . $request->search . '%');
 
-        })->latest()->paginate(5);
+        })->paginate(5);
 
         return view('dashboard.categories.index',compact('categories'));
     }

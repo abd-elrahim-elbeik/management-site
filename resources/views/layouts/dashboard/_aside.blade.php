@@ -35,6 +35,7 @@
                 <li><a href="{{ route('dashboard.users.index') }}"><i class="fa fa-th"></i><span>@lang('site.users')</span></a></li>
             @endif
 
+            
            {{-- ___________________________________________________________________________ --}}
 
             {{--<li><a href="{{ route('dashboard.categories.index') }}"><i class="fa fa-book"></i><span>@lang('site.categories')</span></a></li>--}}
@@ -64,8 +65,10 @@
             <a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a>
             </li>
             </ul>
-            </li>
-        </ul> --}}
+            </li>--}}
+        </ul>
+
+
 
     </section>
 

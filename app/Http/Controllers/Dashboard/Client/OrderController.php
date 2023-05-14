@@ -7,11 +7,15 @@ use App\Models\Category;
 use App\Models\Client;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
+use App\Notifications\MakeOrder;
+use App\Notifications\MakeOrderUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -25,13 +29,24 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,Client $client)
+    public function store(Request $request,Client $client,Order $order)
     {
+
         $request->validate([
             'products' => 'required|array',
         ]);
 
         $this->attach_order($request, $client);
+
+
+        $order = $order->all()->last();
+        $user = User::FindOrFail(1);
+        //dd($user);
+        //$user->notify(new MakeOrderUser($order));
+
+       Notification::send($user, new MakeOrderUser($order));
+
+       // Notification::send($client, new MakeOrder());
 
         session()->flash('success', __('site.added_successfully'));
         return redirect()->route('dashboard.orders.index');

@@ -11,6 +11,7 @@
             <ol class="breadcrumb">
                 <li><a href="{{ route('dashboard.welcome') }}"><i class="fa fa-dashboard"></i> @lang('site.dashboard')</a></li>
                 <li class="active">@lang('site.clients')</li>
+                    
             </ol>
         </section>
 
@@ -55,6 +56,7 @@
                                 <th>#</th>
                                 <th>@lang('site.name')</th>
                                 <th>@lang('site.phone')</th>
+                                <th>@lang('site.email')</th>
                                 <th>@lang('site.address')</th>
                                 <th>@lang('site.add_order')</th>
                                 <th>@lang('site.action')</th>
@@ -68,6 +70,7 @@
                                     <td>{{ $client->name }}</td>
                                     <td>{{ implode( '-' , array_filter($client ->phone)) }}</td>
                                     {{-- <td>{{ is_array($client->phone) ? implode($client->phone, '-') : $client->phone }}</td> --}}
+                                    <td>{{ $client->email }}</td>
                                     <td>{{ $client->address }}</td>
                                     <td>
                                         @if (auth()->user()->hasPermission('orders_create'))
@@ -108,6 +111,8 @@
                     @endif
 
                 </div><!-- end of box body -->
+
+
 
 
             </div><!-- end of box -->
